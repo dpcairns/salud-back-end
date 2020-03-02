@@ -6,6 +6,7 @@ const cors = require('cors');
 
 
 
+app.use(cors());
 
 const getVodkaDrinks = async() => {
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/filter.php?i=vodka}`);
