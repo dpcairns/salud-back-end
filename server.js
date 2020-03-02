@@ -7,14 +7,16 @@ const cors = require('cors');
 
 
 app.use(cors());
-
+//fetching database for class of Drinks
+// This searches for all drinks containing specified liquer endpoint.
 const getVodkaDrinks = async() => {
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/filter.php?i=vodka`);
     return drinkApi.body.drinks.map(vodkaDrink => {
         
         return {
             name: vodkaDrink.strDrink,
-            image: vodkaDrink.strDrinkThumb  
+            image: vodkaDrink.strDrinkThumb,
+            id: vodkaDrink.idDrink  
         };
     });
 };
@@ -28,14 +30,14 @@ app.get('/vodka', async(req, res, next) => {
     }
 
 });
-//fetching database for class
 const getTequilaDrinks = async() => {
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/filter.php?i=tequila`);
     return drinkApi.body.drinks.map(tequilaDrink => {
         
         return {
             name: tequilaDrink.strDrink,
-            image: tequilaDrink.strDrinkThumb  
+            image: tequilaDrink.strDrinkThumb, 
+            id: tequilaDrink.idDrink 
         };
     });
 };
@@ -55,7 +57,8 @@ const getWhiskeyDrinks = async() => {
         
         return {
             name: whiskeyDrink.strDrink,
-            image: whiskeyDrink.strDrinkThumb  
+            image: whiskeyDrink.strDrinkThumb,
+            id: whiskeyDrink.idDrink   
         };
     });
 };
@@ -75,7 +78,8 @@ const getRumDrinks = async() => {
         
         return {
             name: rumDrink.strDrink,
-            image: rumDrink.strDrinkThumb  
+            image: rumDrink.strDrinkThumb,
+            id: rumDrink.idDrink   
         };
     });
 };
@@ -95,7 +99,8 @@ const getGinDrinks = async() => {
         
         return {
             name: ginDrink.strDrink,
-            image: ginDrink.strDrinkThumb  
+            image: ginDrink.strDrinkThumb,
+            id: ginDrink.idDrink   
         };
     });
 };
@@ -109,21 +114,22 @@ app.get('/gin', async(req, res, next) => {
     }
 
 });
-const getcotchDrinks = async() => {
+const getScotchDrinks = async() => {
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/filter.php?i=scotch`);
     return drinkApi.body.drinks.map(scotchDrink => {
         
         return {
             name: scotchDrink.strDrink,
-            image: scotchDrink.strDrinkThumb  
+            image: scotchDrink.strDrinkThumb,
+            id: scotchDrink.idDrink   
         };
     });
 };
 
 app.get('/scotch', async(req, res, next) => {
     try {
-        const allscotchDrinks = await getscotchDrinks();
-        res.json(allscotchDrinks);
+        const allScotchDrinks = await getScotchDrinks();
+        res.json(allScotchDrinks);
     } catch (err) {
         next(err);   
     }
