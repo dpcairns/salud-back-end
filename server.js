@@ -10,6 +10,7 @@ app.use(cors());
 //fetching database for class of Drinks
 // This searches for all drinks containing specified liquer endpoint.
 const getVodkaDrinks = async() => {
+
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/filter.php?i=vodka`);
     return drinkApi.body.drinks.map(vodkaDrink => {
         
@@ -136,7 +137,7 @@ app.get('/scotch', async(req, res, next) => {
 
 });
 const getDrinksId = async() => {
-    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=178321`);
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=${}`);
     return drinkApi.body.drinks.map(individualDrink => {
         
         return {
@@ -149,8 +150,9 @@ const getDrinksId = async() => {
     });
 };
 
-app.get('/id', async(req, res, next) => {
+app.get('/id/:myDrinkId', async(req, res, next) => {
     try {
+        [req.params.myDrinkId];
         const allDrinksId = await getDrinksId();
         res.json(allDrinksId);
     } catch (err) {
