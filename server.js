@@ -135,6 +135,32 @@ app.get('/scotch', async(req, res, next) => {
     }
 
 });
+const getDrinksId = async() => {
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=178321`);
+    return drinkApi.body.drinks.map(individualDrink => {
+        
+        return {
+            Name: individualDrink.strDrink, 
+            Image: individualDrink.strDrinkThumb,
+            Ingredients:[individualDrink.strIngredients1, individualDrink.strIngredients2, individualDrink.strIngredients3, individualDrink.strIngredients4, individualDrink.strIngredients5, individualDrink.strIngredients6, individualDrink.strIngredients7, individualDrink.strIngredients8, individualDrink.strIngredients9, individualDrink.strIngredients10, individualDrink.strIngredients11, individualDrink.strIngredients12, individualDrink.strIngredients13, individualDrink.strIngredients14, individualDrink.strIngredients15],
+            Measurement:[individualDrink.strMeasure1, individualDrink.strMeasure2, individualDrink.strMeasure3, individualDrink.strMeasure4, individualDrink.strMeasure5, individualDrink.strMeasure6, individualDrink.strMeasure7, individualDrink.strMeasure8, individualDrink.strMeasure9, individualDrink.strMeasure10, individualDrink.strMeasure11, individualDrink.strMeasure12, individualDrink.strMeasure13, individualDrink.strMeasure14, individualDrink.strMeasure15],
+            Instructions: individualDrink.strInstructions   
+        };
+    });
+};
+
+app.get('/id', async(req, res, next) => {
+    try {
+        const allDrinksId = await getDrinksId();
+        res.json(allDrinksId);
+    } catch (err) {
+        next(err);   
+    }
+
+});
+
+https://www.thecocktaildb.com/api/json/v2/lookup.php?i=11007
+
 //made a const called port and go to the port that we made in env OR (||) go to 5000
 const port = process.env.PORT || 5000;
 
