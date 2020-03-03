@@ -5,14 +5,14 @@ const request = require('superagent');
 const cors = require('cors');
 const client = require('./lib/client');
 
-
+client.connect();
 
 app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 //fetching database for class of Drinks
 // This searches for all drinks containing specified liquer endpoint.
-const createAuthRoutes = require('./auth/create-auth-routes.js');
+const createAuthRoutes = require('./lib/auth/create-auth-routes.js');
 
 const authRoutes = createAuthRoutes({
     selectUser(email) {
@@ -39,7 +39,15 @@ const authRoutes = createAuthRoutes({
 app.use('/auth', authRoutes);
 
 // for every route, on every request, make sure there is a token
-const ensureAuth = require('./lib/auth/ensure-auth');
+const ensureAuth = require('./lib/auth/ensure-auth.js');
+app.use('/vodka', ensureAuth);
+app.use('/gin', ensureAuth);
+app.use('/rum', ensureAuth);
+app.use('/tequila', ensureAuth);
+app.use('/whiskey', ensureAuth);
+app.use('/scotch', ensureAuth);
+app.use('/random', ensureAuth);
+//app.use('/favorites', ensureAuth);
 
 
 const getVodkaDrinks = async() => {
