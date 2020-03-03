@@ -137,7 +137,7 @@ app.get('/scotch', async(req, res, next) => {
 
 });
 const getDrinksId = async() => {
-    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=${}`);
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=17832`);
     return drinkApi.body.drinks.map(individualDrink => {
         
         return {
