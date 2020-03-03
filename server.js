@@ -49,6 +49,62 @@ app.use('/scotch', ensureAuth);
 app.use('/random', ensureAuth);
 //app.use('/favorites', ensureAuth);
 
+app.get('/favorites', async(req, res) => {
+    try {
+        const myQuery = `
+        SELECT * FROM favorites 
+        WHERE user_id=$1
+        `;
+        const favorites = await client.query(myQuery, [req.userId]);
+
+        res.json(favorites.rows);
+    }
+    catch (e) {
+        console.log(e);
+    }
+});
+
+app.delete('/favorites/:id', async(req, res) => {
+    try {
+        const myQuery = `
+        DELETE FROM favorites
+        WHERE id=$1
+        RETURNING *
+        `;
+
+        const favorites = await client.query(myQuery, [req.params.id]);
+
+        res.json(favorites.rows);
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+app.post('/favorites', async(req, res) => {
+    try {
+        const {
+            name,
+           image,
+        } = req.body;
+
+        const newFavorites = await client.query(`
+        INSERT INTO favorites (name, image,user_id)
+        values ($1, $2, $3)
+        returning *
+        `, [
+            name, 
+            image,
+            req.userId,
+        ]);
+
+        res.json(newFavorites.rows[0]);
+
+        
+    }
+    catch (e) {
+        console.log(e);
+    }
+});
 
 const getVodkaDrinks = async() => {
 
@@ -62,6 +118,8 @@ const getVodkaDrinks = async() => {
         };
     });
 };
+
+
 
 app.get('/vodka', async(req, res, next) => {
     try {
@@ -156,6 +214,8 @@ app.get('/gin', async(req, res, next) => {
     }
 
 });
+
+
 const getScotchDrinks = async() => {
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/filter.php?i=scotch`);
     return drinkApi.body.drinks.map(scotchDrink => {
