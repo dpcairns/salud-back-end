@@ -98,8 +98,6 @@ app.post('/favorites', async(req, res) => {
         ]);
 
         res.json(newFavorites.rows[0]);
-
-        
     }
     catch (e) {
         console.log(e);
