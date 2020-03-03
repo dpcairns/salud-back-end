@@ -161,6 +161,51 @@ app.get('/id/:myDrinkId', async(req, res, next) => {
 
 });
 
+const getPopularDrinks = async() => {
+
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/popular.php`);
+    return drinkApi.body.drinks.map(popularDrink => {
+        
+        return {
+            name: popularDrink.strDrink,
+            image: popularDrink.strDrinkThumb,
+            id: popularDrink.idDrink  
+        };
+    });
+};
+
+app.get('/popular', async(req, res, next) => {
+    try {
+        const allPopularDrinks = await getPopularDrinks();
+        res.json(allPopularDrinks);
+    } catch (err) {
+        next(err);   
+    }
+
+});
+
+const getRandomDrinks = async() => {
+
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/randomselection.php`);
+    return drinkApi.body.drinks.map(randomDrink => {
+        
+        return {
+            name: randomDrink.strDrink,
+            image: randomDrink.strDrinkThumb,
+            id: randomDrink.idDrink  
+        };
+    });
+};
+
+app.get('/random', async(req, res, next) => {
+    try {
+        const allRandomDrinks = await getRandomDrinks();
+        res.json(allRandomDrinks);
+    } catch (err) {
+        next(err);   
+    }
+
+});
 
 //made a const called port and go to the port that we made in env OR (||) go to 5000
 const port = process.env.PORT || 5000;
