@@ -235,8 +235,8 @@ app.get('/scotch', async(req, res, next) => {
     }
 
 });
-const getDrinksId = async() => {
-    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=17832`);
+const getDrinksId = async(req) => {
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/lookup.php?i=${req.params.myDrinkId}`);
     return drinkApi.body.drinks.map(individualDrink => {
         
         return {
@@ -252,7 +252,7 @@ const getDrinksId = async() => {
 app.get('/id/:myDrinkId', async(req, res, next) => {
     try {
         [req.params.myDrinkId];
-        const allDrinksId = await getDrinksId();
+        const allDrinksId = await getDrinksId(req);
         res.json(allDrinksId);
     } catch (err) {
         next(err);   
