@@ -84,7 +84,7 @@ app.post('/favorites', async(req, res) => {
     try {
         const {
             name,
-           image,
+            image,
         } = req.body;
 
         const newFavorites = await client.query(`
