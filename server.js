@@ -309,7 +309,7 @@ app.get('/random', async(req, res, next) => {
 });
 
 const getDrinkByName = async(req) => {
-    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/search.php?s=${req.params.searchQuery}`);
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${req.params.myCocktail}`);
     return drinkApi.body.drinks.map(individualDrink => {
         
         return {
@@ -321,7 +321,7 @@ const getDrinkByName = async(req) => {
 
 app.get('/name/:myCocktail', async(req, res, next) => {
     try {
-        [req.params.searchQuery];
+        [req.params.myCocktail];
         const thisDrink = await getDrinkByName(req);
         res.json(thisDrink);
     } catch (err) {
