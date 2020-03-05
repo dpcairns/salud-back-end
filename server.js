@@ -47,7 +47,7 @@ app.use('/tequila', ensureAuth);
 app.use('/whiskey', ensureAuth);
 app.use('/scotch', ensureAuth);
 app.use('/random', ensureAuth);
-//app.use('/favorites', ensureAuth);
+app.use('/favorites', ensureAuth);
 
 app.get('/favorites', async(req, res) => {
     try {
@@ -88,13 +88,13 @@ app.post('/favorites', async(req, res) => {
         } = req.body;
 
         const newFavorites = await client.query(`
-        INSERT INTO favorites (name, image,user_id)
+        INSERT INTO favorites (name, image, user_id)
         values ($1, $2, $3)
         returning *
         `, [
             name, 
             image,
-            req.userId,
+            req.userId
         ]);
 
         res.json(newFavorites.rows[0]);
