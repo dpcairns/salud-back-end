@@ -246,7 +246,8 @@ const getDrinksId = async(req) => {
             Image: individualDrink.strDrinkThumb,
             Ingredients:[individualDrink.strIngredient1, individualDrink.strIngredient2, individualDrink.strIngredient3, individualDrink.strIngredient4, individualDrink.strIngredient5, individualDrink.strIngredient6, individualDrink.strIngredient7, individualDrink.strIngredient8, individualDrink.strIngredient9, individualDrink.strIngredient10, individualDrink.strIngredient11, individualDrink.strIngredient12, individualDrink.strIngredient13, individualDrink.strIngredient14, individualDrink.strIngredient15],
             Measurement:[individualDrink.strMeasure1, individualDrink.strMeasure2, individualDrink.strMeasure3, individualDrink.strMeasure4, individualDrink.strMeasure5, individualDrink.strMeasure6, individualDrink.strMeasure7, individualDrink.strMeasure8, individualDrink.strMeasure9, individualDrink.strMeasure10, individualDrink.strMeasure11, individualDrink.strMeasure12, individualDrink.strMeasure13, individualDrink.strMeasure14, individualDrink.strMeasure15],
-            Instructions: individualDrink.strInstructions   
+            Instructions: individualDrink.strInstructions,
+            id: individualDrink.idDrink   
         };
     });
 };
