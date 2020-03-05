@@ -308,6 +308,28 @@ app.get('/random', async(req, res, next) => {
 
 });
 
+const getDrinkByName = async(req) => {
+    const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v2/${process.env.API_KEY}/search.php?s=${req.params.searchQuery}`);
+    return drinkApi.body.drinks.map(individualDrink => {
+        
+        return {
+            name: individualDrink.strDrink,
+            image: individualDrink.strDrinkThumb, 
+        };
+    });
+};
+
+app.get('/name/:myCocktail', async(req, res, next) => {
+    try {
+        [req.params.searchQuery];
+        const thisDrink = await getDrinkByName(req);
+        res.json(thisDrink);
+    } catch (err) {
+        next(err);   
+    }
+
+});
+
 //made a const called port and go to the port that we made in env OR (||) go to 5000
 const port = process.env.PORT || 5000;
 
