@@ -9,6 +9,8 @@ client.connect();
 
 app.use(cors());
 
+app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 //fetching database for class of Drinks
 // This searches for all drinks containing specified liquer endpoint.
@@ -86,7 +88,7 @@ app.post('/favorites', async(req, res) => {
             name,
             image,
         } = req.body;
-
+        console.log("user_id", req.userId);
         const newFavorites = await client.query(`
         INSERT INTO favorites (name, image, user_id)
         values ($1, $2, $3)
