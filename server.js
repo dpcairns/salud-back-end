@@ -310,6 +310,7 @@ app.get('/random', async(req, res, next) => {
 
 const getDrinkByName = async(req) => {
     const drinkApi = await request.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${req.params.myCocktail}`);
+    console.log(drinkApi, 'heres the data');
     return drinkApi.body.drinks.map(individualDrink => {
         
         return {
