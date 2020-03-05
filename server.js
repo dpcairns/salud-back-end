@@ -316,6 +316,7 @@ const getDrinkByName = async(req) => {
         return {
             name: individualDrink.strDrink,
             image: individualDrink.strDrinkThumb, 
+            id: individualDrink.idDrink
         };
     });
 };
